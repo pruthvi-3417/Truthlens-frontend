@@ -1,0 +1,235 @@
+{
+  "manifest_version": "1.0.0",
+  "schema_version": "1.0.0",
+  "exported_at_utc": "2026-11-19T14:17:22.014Z",
+  "exporter_tool": {
+    "name": "TruthLens",
+    "version": "1.0.0"
+  },
+  "storage_notice": "Workspace case storage (workspace/cases/) is ephemeral local container storage for prototype investigation and audit verification. It is not permanent or legally certified immutable WORM storage; export portable case manifests for retention.",
+  "export_options": {
+    "include_original_evidence": false,
+    "include_analysis_results": false
+  },
+  "case": {
+    "case_id": "case_example_001",
+    "created_at_utc": "2026-11-19T14:17:21.981Z",
+    "updated_at_utc": "2026-11-19T14:17:22.002Z",
+    "title": "Example Forensic Case",
+    "context_text": "Submitted PNG asset for baseline Phase 1 manifest verification.",
+    "status": "analyzed"
+  },
+  "evidence_items": [
+    {
+      "schema_version": "1.0.0",
+      "evidence_id": "ev_example_001",
+      "case_id": "case_example_001",
+      "modality": "image",
+      "original_filename": "hero.png",
+      "declared_mime": "image/png",
+      "sniffed_mime": "image/png",
+      "detected_format": "PNG",
+      "size_bytes": 13057,
+      "sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+      "ingest_timestamp_utc": "2026-11-19T14:17:21.987Z",
+      "context_note": null,
+      "storage_ref": {
+        "backend": "local_workspace",
+        "relative_path": "originals/ev_example_001/hero.png",
+        "read_only_mode": true,
+        "ephemeral_notice": "Workspace case storage (workspace/cases/) is ephemeral local container storage for prototype investigation and audit verification. It is not permanent or legally certified immutable WORM storage; export portable case manifests for retention."
+      },
+      "hash_verified_at_utc": "2026-11-19T14:17:21.987Z",
+      "original_bytes_included": false
+    }
+  ],
+  "analyses": [
+    {
+      "schema_version": "1.0.0",
+      "analysis_id": "ana_example_001",
+      "case_id": "case_example_001",
+      "evidence_id": "ev_example_001",
+      "modality": "image",
+      "tool_version": "1.0.0",
+      "maturity_tier": "A",
+      "calibration": {
+        "status": "uncalibrated",
+        "label": "Uncalibrated — qualitative indicator only",
+        "notes": "No held-out calibration curve is attached to this indicator; treat observations qualitatively."
+      },
+      "created_at_utc": "2026-11-19T14:17:22.002Z",
+      "parameters": {
+        "ela_quality": 90,
+        "noise_sigma": 1
+      },
+      "artifact_ref": "artifacts/ana_example_001.json",
+      "result_sha256": "14f4ad31cbfff43aa3b960919e4963b50ad4f2a60949bb2571cd9058f1a1043d"
+    }
+  ],
+  "findings": [
+    {
+      "id": "OBS-NOISE-001",
+      "title": "Elevated Dispersion in High-Frequency Residuals",
+      "module": "noise",
+      "tier": "A",
+      "severity": "informational",
+      "flagged_evidence": "hero.png (Image-wide measurement)",
+      "indicator": "Regional residual standard deviation varies by 9.53 (heterogeneity ratio: 0.69).",
+      "cross_modal_context": "An isolated statistical observation was identified in the Noise & Texture domain, while all other 2 independent domains show typical distributions. Supporting spatial analysis localized peak variation to region r1_c0.",
+      "confidence": "Uncalibrated — qualitative indicator only (heuristic threshold check)",
+      "calibration_label": "Uncalibrated — qualitative indicator only",
+      "source_trace": "evidence:ev_example_001 | sha256:881ffbcaafc212e4…",
+      "summary": "Spatial variations in high-frequency residuals naturally track detailed foreground subjects and sharp contours. Recommended check: review flagged region(s) alongside source context.",
+      "limitations": [
+        "Gaussian low-pass residuals measure high-frequency image structure rather than pure hardware sensor noise."
+      ]
+    },
+    {
+      "id": "OBS-SPAT-001",
+      "title": "Localized Regional Statistical Outlier Detected",
+      "module": "spatial",
+      "tier": "A",
+      "severity": "informational",
+      "flagged_evidence": "hero.png (Regions: r1_c0)",
+      "indicator": "Region r1_c0 exhibits peak statistical deviation of 2.33 from image-wide medians.",
+      "cross_modal_context": "An isolated statistical observation was identified in the Noise & Texture domain, while all other 2 independent domains show typical distributions. Supporting spatial analysis localized peak variation to region r1_c0.",
+      "confidence": "Uncalibrated — qualitative indicator only (heuristic threshold check)",
+      "calibration_label": "Uncalibrated — qualitative indicator only",
+      "source_trace": "evidence:ev_example_001 | sha256:881ffbcaafc212e4…",
+      "summary": "The identified region demonstrates significant statistical contrast in measured properties against the overall image. Recommended check: review flagged region(s) alongside source context.",
+      "limitations": [
+        "Regional contrast occurs naturally in photographic compositions due to depth of field, lighting, and focus."
+      ]
+    }
+  ],
+  "audit_log": [
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_7536d99f-4dd6-420f-92a1-a4a6a0a2da14",
+      "case_id": "case_example_001",
+      "seq": 1,
+      "timestamp_utc": "2026-11-19T14:17:21.985Z",
+      "event_type": "CASE_CREATED",
+      "actor": "api",
+      "evidence_id": null,
+      "analysis_id": null,
+      "details": {
+        "title": "Example Forensic Case",
+        "has_context_text": true,
+        "storage_backend": "local_workspace"
+      },
+      "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "event_hash": "c73ddebfbbb3d8b866fc3d0979f39a0ccf1dd114d13512d2edf93a60e62dd1ae"
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_e5e0684f-10f1-4f3b-a96d-abd839b0281b",
+      "case_id": "case_example_001",
+      "seq": 2,
+      "timestamp_utc": "2026-11-19T14:17:21.988Z",
+      "event_type": "EVIDENCE_INGESTED",
+      "actor": "api",
+      "evidence_id": "ev_example_001",
+      "analysis_id": null,
+      "details": {
+        "original_filename": "hero.png",
+        "modality": "image",
+        "sniffed_mime": "image/png",
+        "detected_format": "PNG",
+        "size_bytes": 13057,
+        "sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+        "relative_path": "originals/ev_example_001/hero.png"
+      },
+      "prev_hash": "c73ddebfbbb3d8b866fc3d0979f39a0ccf1dd114d13512d2edf93a60e62dd1ae",
+      "event_hash": "b1a1a1c988d5f174bc2638b0ad17092d916c7707b98eb99ed5beb391555b1534"
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_86146d9d-a7a7-4525-a605-083daa82a4e1",
+      "case_id": "case_example_001",
+      "seq": 3,
+      "timestamp_utc": "2026-11-19T14:17:21.988Z",
+      "event_type": "HASH_VERIFIED",
+      "actor": "system",
+      "evidence_id": "ev_example_001",
+      "analysis_id": null,
+      "details": {
+        "stage": "post_ingest_readback",
+        "expected_sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+        "actual_sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+        "valid": true
+      },
+      "prev_hash": "b1a1a1c988d5f174bc2638b0ad17092d916c7707b98eb99ed5beb391555b1534",
+      "event_hash": "dd9a49788123ab2c32cb30a2576bc1a1d47388f42cea9ace735ed31482e6d0fc"
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_3ee17d18-bba9-4972-ae2c-62de09289abc",
+      "case_id": "case_example_001",
+      "seq": 4,
+      "timestamp_utc": "2026-11-19T14:17:21.990Z",
+      "event_type": "ANALYSIS_STARTED",
+      "actor": "api",
+      "evidence_id": "ev_example_001",
+      "analysis_id": "ana_example_001",
+      "details": {
+        "modality": "image",
+        "maturity_tier": "A",
+        "tool_version": "1.0.0",
+        "parameters": {
+          "ela_quality": 90,
+          "noise_sigma": 1
+        }
+      },
+      "prev_hash": "dd9a49788123ab2c32cb30a2576bc1a1d47388f42cea9ace735ed31482e6d0fc",
+      "event_hash": "a11ba68b26a1b62b49ed27962d70d09fc1049a3fc0513922ce224a33be6b6cbf"
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_60472594-ff42-42b3-8eb6-54c75db98dad",
+      "case_id": "case_example_001",
+      "seq": 5,
+      "timestamp_utc": "2026-11-19T14:17:22.003Z",
+      "event_type": "ANALYSIS_COMPLETED",
+      "actor": "system",
+      "evidence_id": "ev_example_001",
+      "analysis_id": "ana_example_001",
+      "details": {
+        "artifact_ref": "artifacts/ana_example_001.json",
+        "result_sha256": "14f4ad31cbfff43aa3b960919e4963b50ad4f2a60949bb2571cd9058f1a1043d",
+        "assessment_status": "COMPLETE",
+        "maturity_tier": "A"
+      },
+      "prev_hash": "a11ba68b26a1b62b49ed27962d70d09fc1049a3fc0513922ce224a33be6b6cbf",
+      "event_hash": "0c92e1ab823882831839aa94299c980762a4227966868ca23583d0854eabb5bf"
+    },
+    {
+      "schema_version": "1.0.0",
+      "event_id": "evt_1e04902d-7017-4a01-8610-c671958f3065",
+      "case_id": "case_example_001",
+      "seq": 6,
+      "timestamp_utc": "2026-11-19T14:17:22.004Z",
+      "event_type": "HASH_VERIFIED",
+      "actor": "system",
+      "evidence_id": "ev_example_001",
+      "analysis_id": "ana_example_001",
+      "details": {
+        "stage": "post_analysis_original_check",
+        "expected_sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+        "actual_sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c",
+        "valid": true
+      },
+      "prev_hash": "0c92e1ab823882831839aa94299c980762a4227966868ca23583d0854eabb5bf",
+      "event_hash": "e3657bdcdc71d5ec25bb13bc294ac9381d7ad4fedf756d6e5b0e639e258c5bc2"
+    }
+  ],
+  "verification": {
+    "audit_chain_valid": true,
+    "audit_event_count": 6,
+    "audit_head_hash": "e3657bdcdc71d5ec25bb13bc294ac9381d7ad4fedf756d6e5b0e639e258c5bc2",
+    "evidence_hashes": {
+      "ev_example_001": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c"
+    },
+    "manifest_sha256": "0d065a99a7271d3870d6a926b03cbcbbf018e3fbcc7d2d77af6e187f63891f3d"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://truthlens.local/schemas/case_manifest.v1.schema.json",
+  "title": "TruthLens CaseManifestV1",
+  "type": "object",
+  "required": [
+    "manifest_version",
+    "schema_version",
+    "exported_at_utc",
+    "exporter_tool",
+    "storage_notice",
+    "export_options",
+    "case",
+    "evidence_items",
+    "analyses",
+    "findings",
+    "audit_log",
+    "verification"
+  ],
+  "properties": {
+    "manifest_version": { "const": "1.0.0" },
+    "schema_version": { "const": "1.0.0" },
+    "exported_at_utc": { "type": "string", "format": "date-time" },
+    "exporter_tool": {
+      "type": "object",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "storage_notice": { "type": "string", "minLength": 1 },
+    "export_options": {
+      "type": "object",
+      "required": ["include_original_evidence", "include_analysis_results"],
+      "properties": {
+        "include_original_evidence": { "type": "boolean" },
+        "include_analysis_results": { "type": "boolean" }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": ["case_id", "created_at_utc", "updated_at_utc", "title", "status"],
+      "properties": {
+        "case_id": { "type": "string" },
+        "created_at_utc": { "type": "string" },
+        "updated_at_utc": { "type": "string" },
+        "title": { "type": "string" },
+        "context_text": { "type": ["string", "null"] },
+        "status": { "enum": ["open", "analyzed", "exported", "archived"] }
+      }
+    },
+    "evidence_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "case_id",
+          "modality",
+          "sniffed_mime",
+          "detected_format",
+          "size_bytes",
+          "sha256",
+          "ingest_timestamp_utc",
+          "original_bytes_included"
+        ],
+        "properties": {
+          "evidence_id": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "size_bytes": { "type": "integer", "minimum": 0 },
+          "original_bytes_included": { "type": "boolean" },
+          "original_bytes_base64": { "type": "string" }
+        }
+      }
+    },
+    "analyses": { "type": "array" },
+    "findings": { "type": "array" },
+    "audit_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema_version",
+          "event_id",
+          "case_id",
+          "seq",
+          "timestamp_utc",
+          "event_type",
+          "actor",
+          "details",
+          "prev_hash",
+          "event_hash"
+        ]
+      }
+    },
+    "verification": {
+      "type": "object",
+      "required": [
+        "manifest_sha256",
+        "audit_chain_valid",
+        "audit_event_count",
+        "audit_head_hash",
+        "evidence_hashes"
+      ],
+      "properties": {
+        "manifest_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "audit_chain_valid": { "type": "boolean" },
+        "audit_event_count": { "type": "integer", "minimum": 0 },
+        "audit_head_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "evidence_hashes": { "type": "object" }
+      }
+    }
+  }
+}

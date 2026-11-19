@@ -1,0 +1,5 @@
+{
+  "name": "TruthLens",
+  "description": "Digital forensics platform for image metadata, Error Level Analysis (ELA), noise residual, 2D FFT frequency spectrum, regional anomaly analysis, and multi-domain evidence synthesis.",
+  "requestFramePermissions": []
+}

@@ -1,11 +1,13 @@
-<div align="center">
+# TruthLens
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+TruthLens is a premium frontend for a multimodal digital-forensics and deepfake detection platform.
 
-  <h1>Built with AI Studio</h2>
+The complete React application is located in [`frontend/`](frontend/). Run it with:
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+See [`frontend/README.md`](frontend/README.md) for configuration and validation details.

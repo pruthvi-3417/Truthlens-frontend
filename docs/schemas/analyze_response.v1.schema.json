@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://truthlens.local/schemas/analyze_response.v1.schema.json",
+  "title": "TruthLens AnalyzeResponse v1.0.0",
+  "type": "object",
+  "required": [
+    "success",
+    "application",
+    "phase",
+    "image_properties",
+    "sha256",
+    "analyses",
+    "assessment"
+  ],
+  "properties": {
+    "success": { "const": true },
+    "application": { "type": "string", "minLength": 1 },
+    "phase": { "type": "string", "minLength": 1 },
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "case_id": { "type": "string" },
+    "evidence_id": { "type": "string" },
+    "audit_head_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "analysis_timestamp": { "type": "string", "format": "date-time" },
+    "maturity_tier": { "enum": ["A", "B", "C"] },
+    "calibration": {
+      "type": "object",
+      "required": ["status", "label"],
+      "properties": {
+        "status": { "enum": ["uncalibrated", "calibrated"] },
+        "label": { "type": "string" },
+        "sample_count": { "type": "number" },
+        "ece": { "type": "number" },
+        "notes": { "type": "string" }
+      }
+    },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "image_properties": {
+      "type": "object",
+      "required": [
+        "filename",
+        "format",
+        "mime_type",
+        "size_bytes",
+        "size_readable",
+        "width",
+        "height",
+        "aspect_ratio",
+        "pixel_count",
+        "mode",
+        "has_transparency"
+      ],
+      "properties": {
+        "filename": { "type": ["string", "null"] },
+        "format": { "type": "string" },
+        "mime_type": { "type": "string" },
+        "size_bytes": { "type": "integer", "minimum": 1 },
+        "size_readable": { "type": "string" },
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 },
+        "aspect_ratio": { "type": "number" },
+        "pixel_count": { "type": "integer", "minimum": 1 },
+        "mode": { "type": "string" },
+        "has_transparency": { "type": "boolean" }
+      }
+    },
+    "analyses": {
+      "type": "array",
+      "minItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["name", "status", "observations", "metrics", "limitations", "details"],
+        "properties": {
+          "name": { "type": "string" },
+          "status": {
+            "enum": ["ok", "completed", "skipped", "failed", "unavailable", "not_implemented"]
+          },
+          "tier": { "enum": ["A", "B", "C"] },
+          "observations": { "type": "array", "items": { "type": "string" } },
+          "metrics": { "type": "object" },
+          "limitations": { "type": "array", "items": { "type": "string" } },
+          "details": { "type": ["object", "null"] }
+        }
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "required": ["status", "summary", "limitations"],
+      "properties": {
+        "status": { "enum": ["INCOMPLETE", "INCONCLUSIVE", "COMPLETE"] },
+        "summary": { "type": "string", "minLength": 1 },
+        "limitations": { "type": "array", "items": { "type": "string" } },
+        "category": {
+          "enum": [
+            "NO_NOTABLE_VARIATION",
+            "ISOLATED_OBSERVATION",
+            "MIXED_OBSERVATIONS",
+            "CONVERGING_OBSERVATIONS",
+            "INSUFFICIENT_EVIDENCE"
+          ]
+        },
+        "relationship": {
+          "enum": [
+            "converging_observations",
+            "isolated_observation",
+            "mixed_observations",
+            "insufficient_evidence",
+            "no_notable_variation"
+          ]
+        },
+        "maturity_tier": { "enum": ["A", "B", "C"] }
+      }
+    }
+  }
+}
